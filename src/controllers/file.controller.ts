@@ -133,7 +133,104 @@ export class FileController {
       });
     }
   }
+  async getFilesByDate(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const { date } = req.params;
+      
+      // Validate date format
+      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        res.status(400).json({ 
+          success: false,
+          error: 'Invalid date format. Use YYYY-MM-DD' 
+        });
+        return;
+      }
 
+      const files = await fileService.getFilesByDate(req.user!.id, date);
+
+      res.json({
+        success: true,
+        date,
+        count: files.length,
+        files,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  }
+
+  async getFilesByDateRange(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const { startDate, endDate } = req.query;
+      
+      // Validate date format
+      if (!startDate || !endDate) {
+        res.status(400).json({ 
+          success: false,
+          error: 'Both startDate and endDate are required' 
+        });
+        return;
+      }
+
+      const files = await fileService.getFilesByDateRange(
+        req.user!.id, 
+        startDate as string, 
+        endDate as string
+      );
+
+      res.json({
+        success: true,
+        startDate,
+        endDate,
+        count: files.length,
+        files,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  }
+
+  async getFilesCalendar(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const { year, month } = req.query;
+      
+      const currentYear = year ? parseInt(year as string) : new Date().getFullYear();
+      const currentMonth = month ? parseInt(month as string) : new Date().getMonth() + 1;
+
+      // Validate year and month
+      if (currentMonth < 1 || currentMonth > 12) {
+        res.status(400).json({ 
+          success: false,
+          error: 'Month must be between 1 and 12' 
+        });
+        return;
+      }
+
+      const groupedFiles = await fileService.getFilesGroupedByDate(
+        req.user!.id,
+        currentYear,
+        currentMonth
+      );
+
+      res.json({
+        success: true,
+        year: currentYear,
+        month: currentMonth,
+        data: groupedFiles,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+    }
+  }
   async deleteFile(req: AuthRequest, res: Response): Promise<void> {
     try {
       await fileService.deleteFile(req.user!.id, req.params.id);
