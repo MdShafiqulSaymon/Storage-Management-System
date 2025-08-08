@@ -36,7 +36,7 @@ export const testSendGridConnection = async (): Promise<boolean> => {
   try {
     // This is a simple way to test if the API key is valid
     // SendGrid doesn't have a specific "test connection" endpoint
-    console.log('📧 SendGrid configuration appears valid');
+    console.log('SendGrid configuration appears valid');
     return true;
   } catch (error) {
     console.error('SendGrid connection test failed:', error);

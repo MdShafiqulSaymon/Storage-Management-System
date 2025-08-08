@@ -15,6 +15,12 @@ router.get('/all', fileController.getAllFiles);
 router.get('/images', fileController.getImages);
 router.get('/pdfs', fileController.getPdfs);
 router.get('/notes', fileController.getNotes);
+
+// Calendar/Date based routes
+router.get('/date/:date', fileController.getFilesByDate); // Get files for specific date
+router.get('/date-range', fileController.getFilesByDateRange); // Get files between dates
+router.get('/calendar', fileController.getFilesCalendar);
+
 router.get('/:id', fileController.getFileById);
 router.delete('/:id', fileController.deleteFile);
 

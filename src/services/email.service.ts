@@ -12,8 +12,8 @@ export class EmailService {
 
   async sendResetPasswordEmail(email: string, resetToken: string): Promise<void> {
     if (this.isDevelopment) {
-      console.log('📧 [DEV MODE] Password reset email would be sent to:', email);
-      console.log('🔗 Reset URL:', `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`);
+      console.log('[DEV MODE] Password reset email would be sent to:', email);
+      console.log('Reset URL:', `${process.env.CLIENT_URL}/reset-password?token=${resetToken}`);
       return;
     }
 
@@ -80,8 +80,8 @@ export class EmailService {
 
   async sendWelcomeEmail(email: string, username: string): Promise<void> {
     if (this.isDevelopment) {
-      console.log('📧 [DEV MODE] Welcome email would be sent to:', email);
-      console.log('👤 User:', username);
+      console.log('[DEV MODE] Welcome email would be sent to:', email);
+      console.log('User:', username);
       return;
     }
 
@@ -155,7 +155,7 @@ export class EmailService {
 
   async testConnection(): Promise<boolean> {
     if (this.isDevelopment) {
-      console.log('📧 [DEV MODE] Email testing skipped');
+      console.log('[DEV MODE] Email testing skipped');
       return true;
     }
 
