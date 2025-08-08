@@ -4,9 +4,11 @@
 
 ## Local Setup
 
+### Option 1: Regular Setup
+
 1. **Clone Repository**
 ```bash
-git clone https://github.com/MdShafiqulSaymon/Storage-Management-System.git
+git clone https://github.com/yourusername/storage-management-system.git
 cd storage-management-system
 ```
 
@@ -24,6 +26,61 @@ npm run dev
 ```
 
 5. **Local URL:** http://localhost:5000
+
+### Option 2: Docker Setup
+
+1. **Clone Repository**
+```bash
+git clone https://github.com/yourusername/storage-management-system.git
+cd storage-management-system
+```
+
+2. **Create `.env` file**
+Copy `.env.example` to `.env` and add your credentials
+
+3. **Build Docker Image**
+```bash
+docker build -t storage-management-api .
+```
+
+4. **Run Docker Container**
+
+**For Windows (Command Prompt/PowerShell):**
+```bash
+docker run -d --name storage-api -p 5000:5000 --env-file .env storage-management-api
+```
+
+**For Linux/Mac:**
+```bash
+docker run -d \
+  --name storage-api \
+  -p 5000:5000 \
+  --env-file .env \
+  storage-management-api
+```
+
+5. **Access API:** http://localhost:5000
+
+**Docker Commands:**
+```bash
+# View logs
+docker logs storage-api
+
+# Stop container
+docker stop storage-api
+
+# Start container
+docker start storage-api
+
+# Remove container
+docker rm storage-api
+
+# Rebuild after code changes (Windows - single line)
+docker build -t storage-management-api .
+docker stop storage-api
+docker rm storage-api
+docker run -d --name storage-api -p 5000:5000 --env-file .env storage-management-api
+```
 
 ---
 **Test User Credentials:**
